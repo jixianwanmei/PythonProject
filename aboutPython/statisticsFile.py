@@ -8,7 +8,7 @@ def removeLuafile(rootPath):
 	for item in path:
 		if (os.path.isfile(rootPath +"/"+item)):
 			if item.endswith(str(fileSuffix)):
-				print 'remove 			', item
+				print rootPath, item
 				os.remove(rootPath +"/"+item)
 		elif(os.path.isdir(rootPath +"/"+item)):
 			removeLuafile(rootPath +"/"+item)
