@@ -252,5 +252,8 @@ def generateApk(idStr,nameStr,appName,pkgName):
 # #易昂网络4
 # generateApk('1627746','yawl5_APK','街机水浒传','com.baiyikeji.jiejishuihuzhuan')
 #应用汇
-generateApk('1001201','yyhshz_apk','街机水浒传','com.baiyikeji.jiejishuihuzhuan')
+# generateApk('1001201','yyhshz_apk','街机水浒传','com.baiyikeji.jiejishuihuzhuan')
+
+# generateApk('1841155','yxwcps_apk','街机水浒传','com.baiyikeji.jiejishuihuzhuan')
+generateApk('1856831','chengdufanyu_apk','街机水浒传','com.baiyikeji.jiejishuihuzhuan')
 

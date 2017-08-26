@@ -3,9 +3,9 @@ import os,shutil
 import sys
 reload(sys)
 
-#先将所有代码 编译成 luac 
+#先将所有代码 编译成 luac
 
-os.system('cocos luacompile -s /Users/lidongsheng/Documents/framework/ -d /Users/lidongsheng/Documents/framework/ -e -k MIIEpQIBAAKCAQEA5ANvIDDY1a+6bEb8LjW6e9HdcFIung -b DWC --disable-compile')
+os.system('cocos luacompile -s /Users/lidongsheng/Documents/framework/hotupdate/ -d /Users/lidongsheng/Documents/framework/hotupdate/ -e -k MIIEpQIBAAKCAQEA5ANvIDDY1a+6bEb8LjW6e9HdcFIung -b DWC --disable-compile')
 
 #将所有的 lua 代码删除
 def removeLuafile(rootPath):
@@ -18,7 +18,7 @@ def removeLuafile(rootPath):
 		elif(os.path.isdir(rootPath +"/"+item)):
 			removeLuafile(rootPath +"/"+item)
 
-removeLuafile('/Users/lidongsheng/Documents/framework/')
+removeLuafile('/Users/lidongsheng/Documents/framework/hotupdate/')
 
 
 #生成所有开心电玩城的热更新文件；
@@ -29,7 +29,7 @@ removeLuafile('/Users/lidongsheng/Documents/framework/')
 def generateCopyFile(strPath):
 	strArr = strPath.split('/')
 	strPath2 = ''
-	for i in range(0, len(strArr)):	
+	for i in range(0, len(strArr)):
 		if(i==0):
 			strPath2 = strPath2 +strArr[i]+'2'+'/'
 		else:
@@ -52,14 +52,14 @@ def removeFileExceptPath(keepPath):
 	rootPath = keepPath.split('/')[0]
 	os.mkdir(rootPath+'2')
 	copyFileToRoot2(keepPath)
-	
+
 	shutil.rmtree(rootPath)
 	os.rename(rootPath+'2',rootPath)
 
 # rootPath = raw_input('Enter a path :')
 # strPath = str(rootPath)
 # strPath = strPath.rstrip()
-os.chdir('/Users/lidongsheng/Documents/framework/')
+os.chdir('/Users/lidongsheng/Documents/framework/hotupdate/')
 #1.生成一个dwc.zip
 #创建一个 dwc 的文件夹
 
@@ -94,7 +94,7 @@ print('----------------------------------------------完成dwc.zip')
 
 if(os.path.isdir('totalGames')):
 	shutil.rmtree('totalGames')
-os.mkdir(r'totalGames')	
+os.mkdir(r'totalGames')
 shutil.copytree('src','totalGames/src')
 shutil.copytree('res','totalGames/res')
 os.chdir('totalGames')
@@ -106,7 +106,7 @@ print('----------------------------------------------完成复制所有游戏资
 def generateGameZip(gameName,keepPath,keepPath2):
 	if(os.path.isdir(gameName)):
 		shutil.rmtree(gameName)
-	
+
 	shutil.copytree('totalGames/src',gameName+'/src')
 	shutil.copytree('totalGames/res',gameName+'/res')
 	os.chdir(gameName)
