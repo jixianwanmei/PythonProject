@@ -76,14 +76,25 @@ shutil.rmtree('dwc/res/Games')
 print('开始删除 dwc/src 中的游戏【代码】')
 shutil.rmtree('dwc/src/app/games')
 print('开始删除 dwc/src 下的不需要的文件')
-shutil.rmtree('dwc/src/cocos')
-shutil.rmtree('dwc/src/app/modules/help')
 
-os.remove('dwc/src/src.luaproj')
-os.remove('dwc/src/src.config')
+if os.path.exists('dwc/src/cocos'):
+	os.remove('dwc/src/cocos')
 
-os.remove('dwc/src/app/conf/BYConfig.luac')
-os.remove('dwc/src/app/conf/GameConfig.luac')
+if os.path.exists('dwc/src/app/modules/help'):
+	os.remove('dwc/src/app/modules/help')
+
+if os.path.exists('dwc/src/src.luaproj'):
+	os.remove('dwc/src/src.luaproj')
+
+if os.path.exists('dwc/src/src.config'):
+	os.remove('dwc/src/src.config')
+
+if os.path.exists('dwc/src/app/conf/BYConfig.luac'):
+	os.remove('dwc/src/app/conf/BYConfig.luac')
+
+if os.path.exists('dwc/src/app/conf/GameConfig.luac'):	
+	os.remove('dwc/src/app/conf/GameConfig.luac')
+	
 print('移步到 dwc 文件夹')
 os.chdir('dwc/')
 os.system('zip -q -r dwc.zip *')
