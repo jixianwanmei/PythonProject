@@ -72,9 +72,11 @@ print('将 src 和 res 复制到 dwc 文件夹')
 shutil.copytree('src','dwc/src')
 shutil.copytree('res','dwc/res')
 print('开始删除掉 dwc/res 中游戏的【资源】')
-shutil.rmtree('dwc/res/Games')
+if os.path.exists('dwc/res/Games'):
+	shutil.rmtree('dwc/res/Games')
 print('开始删除 dwc/src 中的游戏【代码】')
-shutil.rmtree('dwc/src/app/games')
+if os.path.exists('dwc/src/app/games'):
+	shutil.rmtree('dwc/src/app/games')
 print('开始删除 dwc/src 下的不需要的文件')
 
 if os.path.exists('dwc/src/cocos'):
@@ -103,45 +105,48 @@ os.chdir('../')
 shutil.rmtree('dwc')
 print('----------------------------------------------完成dwc.zip')
 
-if(os.path.isdir('totalGames')):
-	shutil.rmtree('totalGames')
-os.mkdir(r'totalGames')
-shutil.copytree('src','totalGames/src')
-shutil.copytree('res','totalGames/res')
-os.chdir('totalGames')
-removeFileExceptPath('src/app/games')
-removeFileExceptPath('res/Games')
-os.chdir('../')
-print('----------------------------------------------完成复制所有游戏资源')
+# if(os.path.isdir('totalGames')):
+# 	shutil.rmtree('totalGames')
+# os.mkdir(r'totalGames')
+# shutil.copytree('src','totalGames/src')
+# shutil.copytree('res','totalGames/res')
+# os.chdir('totalGames')
+# removeFileExceptPath('src/app/games')
+# removeFileExceptPath('res/Games')
+# os.chdir('../')
+# print('----------------------------------------------完成复制所有游戏资源')
 
-def generateGameZip(gameName,keepPath,keepPath2):
-	if(os.path.isdir(gameName)):
-		shutil.rmtree(gameName)
+# def generateGameZip(gameName,keepPath,keepPath2):
 
-	shutil.copytree('totalGames/src',gameName+'/src')
-	shutil.copytree('totalGames/res',gameName+'/res')
-	os.chdir(gameName)
-	removeFileExceptPath(keepPath)
-	removeFileExceptPath(keepPath2)
+# 	if(os.path.isdir(gameName)):
+# 		shutil.rmtree(gameName)
 
-	os.system('zip -q -r '+gameName+'.zip *')
-	shutil.move(gameName+'.zip','../'+gameName+'.zip')
-	os.chdir('../')
-	shutil.rmtree(gameName)
-	print('----------------------------------------------完成'+gameName+'.zip')
-generateGameZip('bj','src/app/games/bj','res/Games/BJ')
+# 	shutil.copytree('totalGames/src',gameName+'/src')
+# 	shutil.copytree('totalGames/res',gameName+'/res')
+# 	os.chdir(gameName)
+# 	if os.path.exists(keepPath):
+# 		removeFileExceptPath(keepPath)
+# 	if os.path.exists(keepPath2):
+# 		removeFileExceptPath(keepPath2)
+	
+# 	os.system('zip -q -r '+gameName+'.zip *')
+# 	shutil.move(gameName+'.zip','../'+gameName+'.zip')
+# 	os.chdir('../')
+# 	shutil.rmtree(gameName)
+# 	print('----------------------------------------------完成'+gameName+'.zip')
+# generateGameZip('bj','src/app/games/bj','res/Games/BJ')
 
-generateGameZip('brnn','src/app/games/brnn','res/Games/BRNN')
+# generateGameZip('brnn','src/app/games/brnn','res/Games/BRNN')
 
-generateGameZip('by','src/app/games/jjby','res/Games/JJBY')
+# generateGameZip('by','src/app/games/jjby','res/Games/JJBY')
 
-generateGameZip('by2','src/app/games/jjby','res/Games/QPBY')
+# generateGameZip('by2','src/app/games/jjby','res/Games/QPBY')
 
-generateGameZip('fishrun','src/app/games/saiyu','res/Games/FishRun')
+# generateGameZip('fishrun','src/app/games/saiyu','res/Games/FishRun')
 
-generateGameZip('fruits','src/app/games/sgj','res/Games/SGJ')
+# generateGameZip('fruits','src/app/games/sgj','res/Games/SGJ')
 
-generateGameZip('roulette','src/app/games/roulette','res/Games/Roulette')
+# generateGameZip('roulette','src/app/games/roulette','res/Games/Roulette')
 
-generateGameZip('shz','src/app/games/shz','res/Games/SHZ')
-shutil.rmtree('totalGames')
+# generateGameZip('shz','src/app/games/shz','res/Games/SHZ')
+# shutil.rmtree('totalGames')
