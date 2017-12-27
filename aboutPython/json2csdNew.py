@@ -59,6 +59,9 @@ def initOneNode(item, Children):
 	ctype = item['ctype']
 	AbstractNodeData = doc.createElement('AbstractNodeData')
 
+	for tag in item:
+		
+
 	AbstractNodeData.setAttribute('ctype', item['ctype'])
 	AbstractNodeData.setAttribute('Name', item['Name'])
 	AbstractNodeData.setAttribute('ActionTag', item['ActionTag'])
