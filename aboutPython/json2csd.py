@@ -77,9 +77,9 @@ def initOneNode(item, Children):
 			AbstractNodeData.setAttribute('Scale9Height', item['Scale9Height'])
 			if item['FileData']['Plist'] != '':
 				plistFile = readPlist(item['FileData']['Plist'])
-                imageName = item['FileData']['Path']
-                imageWidth = plistFile['frames'][imageName]['sourceSize'][0]
-                imageHeight = plistFile['frames'][imageName]['sourceSize'][1]
+				imageName = item['FileData']['Path']
+				imageWidth = plistFile['frames'][imageName]['sourceSize'][0]
+				imageHeight = plistFile['frames'][imageName]['sourceSize'][1]
                 AbstractNodeData.setAttribute('BottomEage', imageWidth - item['Scale9OriginX'] - item['Scale9Width'])
                 AbstractNodeData.setAttribute('RightEage', imageHeight - item['Scale9OriginY'] - item['Scale9Height'])
             else:
