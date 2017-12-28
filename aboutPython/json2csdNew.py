@@ -69,39 +69,41 @@ def initOneNode(item, Children, doc):
 	for tag in item:
 		if (str(item['ctype']) == 'ImageViewObjectData' or str(item['ctype']) == 'ButtonObjectData') and str(tag) == 'Scale9OriginX':
 			AbstractNodeData.setAttribute('LeftEage', str(item['Scale9OriginX']))
-			imageFileData = 'FileData'
-			if item['ctype'] == 'ImageViewObjectData':
-				imageFileData = 'FileData'
-			elif item['ctype'] == 'ButtonObjectData':
-				imageFileData = 'NormalFileData'
-			if item[imageFileData]['Plist'] != '':
-				plistFile = readPlist(item[imageFileData]['Plist'])
-				imageName = item[imageFileData]['Path']
-				sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
-				imageWidth = float(sourceSize[0])
-				print(type(imageWidth),imageWidth)
-				AbstractNodeData.setAttribute('RightEage', str(imageWidth - item['Scale9OriginX'] - item['Scale9Width']))
-			else:
-				img = Image.open(item[imageFileData]['Path'])
-				imageWidth = float(img.size[0])
-				AbstractNodeData.setAttribute('RightEage', str(imageWidth - item['Scale9OriginX'] - item['Scale9Width']))
+			# imageFileData = 'FileData'
+			# if item['ctype'] == 'ImageViewObjectData':
+			# 	imageFileData = 'FileData'
+			# elif item['ctype'] == 'ButtonObjectData':
+			# 	imageFileData = 'NormalFileData'
+			imageWidth = item['Size']['X']
+			# if item[imageFileData]['Plist'] != '':
+			# 	plistFile = readPlist(item[imageFileData]['Plist'])
+			# 	imageName = item[imageFileData]['Path']
+			# 	sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
+			# 	imageWidth = float(sourceSize[0])
+			# 	print(type(imageWidth),imageWidth)
+			# 	AbstractNodeData.setAttribute('RightEage', str(imageWidth - item['Scale9OriginX'] - item['Scale9Width']))
+			# else:
+			# 	img = Image.open(item[imageFileData]['Path'])
+			# 	imageWidth = float(img.size[0])
+			AbstractNodeData.setAttribute('RightEage', str(int(imageWidth - item['Scale9OriginX'] - item['Scale9Width'])))
 		elif (item['ctype'] == 'ImageViewObjectData' or item['ctype'] == 'ButtonObjectData') and tag == 'Scale9OriginY':
 			AbstractNodeData.setAttribute('TopEage', str(item['Scale9OriginY']))
-			imageFileData = 'FileData'
-			if item['ctype'] == 'ImageViewObjectData':
-				imageFileData = 'FileData'
-			elif item['ctype'] == 'ButtonObjectData':
-				imageFileData = 'NormalFileData'
-			if item[imageFileData]['Plist'] != '':
-				plistFile = readPlist(item[imageFileData]['Plist'])
-				imageName = item[imageFileData]['Path']
-				sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
-				imageHeight = float(sourceSize[1])
-				AbstractNodeData.setAttribute('BottomEage', str(imageHeight - item['Scale9OriginY'] - item['Scale9Height']))
-			else:
-				img = Image.open(item[imageFileData]['Path'])
-				imageHeight = float(img.size[1])
-				AbstractNodeData.setAttribute('BottomEage', str(imageHeight - item['Scale9OriginY'] - item['Scale9Height']))
+			# imageFileData = 'FileData'
+			# if item['ctype'] == 'ImageViewObjectData':
+			# 	imageFileData = 'FileData'
+			# elif item['ctype'] == 'ButtonObjectData':
+			# 	imageFileData = 'NormalFileData'
+			# if item[imageFileData]['Plist'] != '':
+			# 	plistFile = readPlist(item[imageFileData]['Plist'])
+			# 	imageName = item[imageFileData]['Path']
+			# 	sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
+			# 	imageHeight = float(sourceSize[1])
+			# 	AbstractNodeData.setAttribute('BottomEage', str(imageHeight - item['Scale9OriginY'] - item['Scale9Height']))
+			# else:
+			# 	img = Image.open(item[imageFileData]['Path'])
+			# 	imageHeight = float(img.size[1])
+			imageHeight = item['Size']['Y']
+			AbstractNodeData.setAttribute('BottomEage', str(int(imageHeight - item['Scale9OriginY'] - item['Scale9Height'])))
 		elif tag == 'CColor' or tag == 'ShadowColor':
 			xmlNode = doc.createElement(tag)
 			xmlNode.setAttribute('A', '255')
@@ -113,12 +115,15 @@ def initOneNode(item, Children, doc):
 			AbstractNodeData.appendChild(xmlNode)
 		elif tag == 'Children':
 			xmlNode = doc.createElement(tag)
+			AbstractNodeData.appendChild(xmlNode)
 			for subItem in item['Children']:
 				initOneNode(subItem, xmlNode, doc)
 		elif not isinstance(item[tag], dict):
 			AbstractNodeData.setAttribute(tag, str(item[tag]))
-		else:
+		elif isinstance(item[tag], dict):
 			addOneChildSubNode(AbstractNodeData, tag, item[tag], doc)
+		else:
+			print(tag,item[tag])
 
 
 def addOneChildSubNode(Children, mKey, item, doc):
@@ -140,3 +145,4 @@ def generateCSD(rootPath):
 
 os.chdir('/Users/lidongsheng/Desktop/json')
 generateCSD('/Users/lidongsheng/Desktop/json')
+# readJSONFile('/Users/lidongsheng/Desktop/json/ChongZhi_cell_youxiChongZhi.json')
