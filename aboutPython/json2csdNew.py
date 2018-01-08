@@ -37,13 +37,36 @@ def readJSONFile(path):
 	Animation.setAttribute('Duration', str(AnimationData['Duration']))
 	Animation.setAttribute('Speed', str(AnimationData['Speed']))
 	Content.appendChild(Animation)
+	if AnimationData.has_key('Timelines'):
+		#  AnimationData['Timelines'] 是一个数组
+		for item in AnimationData['Timelines']:
+			Timeline = doc.createElement('Timeline')
+			for subItem in item:
+				if isinstance(item[subItem],list):
+					for frameItem in item[subItem]:
+						frameDataNode = doc.createElement(frameItem['ctype'].replace('Data', ''))
+						for subFrameItem in frameItem:
+							if isinstance(frameItem[subFrameItem],dict):
+								xmlNode = doc.createElement(subFrameItem)
+								frameDataNode.appendChild(xmlNode)
+								for mmFT in frameItem[subFrameItem]:
+									xmlNode.setAttribute(mmFT,str(frameItem[subFrameItem][mmFT]))
+							else:
+								frameDataNode.setAttribute(subFrameItem,str(frameItem[subFrameItem]))
+						Timeline.appendChild(frameDataNode)
+				else:
+					Timeline.setAttribute(subItem,str(item[subItem]))
+			Animation.appendChild(Timeline)
 
 	ObjectData = data['Content']['Content']['ObjectData']
 	ObjectData_Node = doc.createElement('ObjectData')
 	ObjectData_Node.setAttribute("Name", str(ObjectData['Name']))
 	if 'Tag' in ObjectData:
 		ObjectData_Node.setAttribute("Tag", str(ObjectData['Tag']))
-	ObjectData_Node.setAttribute("ctype", str(ObjectData['ctype']))
+	if str(ObjectData['Name']) == 'Layer':
+		ObjectData_Node.setAttribute("ctype", 'GameLayerObjectData')
+	else:
+		ObjectData_Node.setAttribute("ctype", 'GameNodeObjectData')
 	Content.appendChild(ObjectData_Node)
 
 	Size = doc.createElement('Size')
@@ -69,39 +92,10 @@ def initOneNode(item, Children, doc):
 	for tag in item:
 		if (str(item['ctype']) == 'ImageViewObjectData' or str(item['ctype']) == 'ButtonObjectData') and str(tag) == 'Scale9OriginX':
 			AbstractNodeData.setAttribute('LeftEage', str(item['Scale9OriginX']))
-			# imageFileData = 'FileData'
-			# if item['ctype'] == 'ImageViewObjectData':
-			# 	imageFileData = 'FileData'
-			# elif item['ctype'] == 'ButtonObjectData':
-			# 	imageFileData = 'NormalFileData'
 			imageWidth = item['Size']['X']
-			# if item[imageFileData]['Plist'] != '':
-			# 	plistFile = readPlist(item[imageFileData]['Plist'])
-			# 	imageName = item[imageFileData]['Path']
-			# 	sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
-			# 	imageWidth = float(sourceSize[0])
-			# 	print(type(imageWidth),imageWidth)
-			# 	AbstractNodeData.setAttribute('RightEage', str(imageWidth - item['Scale9OriginX'] - item['Scale9Width']))
-			# else:
-			# 	img = Image.open(item[imageFileData]['Path'])
-			# 	imageWidth = float(img.size[0])
 			AbstractNodeData.setAttribute('RightEage', str(int(imageWidth - item['Scale9OriginX'] - item['Scale9Width'])))
 		elif (item['ctype'] == 'ImageViewObjectData' or item['ctype'] == 'ButtonObjectData') and tag == 'Scale9OriginY':
 			AbstractNodeData.setAttribute('TopEage', str(item['Scale9OriginY']))
-			# imageFileData = 'FileData'
-			# if item['ctype'] == 'ImageViewObjectData':
-			# 	imageFileData = 'FileData'
-			# elif item['ctype'] == 'ButtonObjectData':
-			# 	imageFileData = 'NormalFileData'
-			# if item[imageFileData]['Plist'] != '':
-			# 	plistFile = readPlist(item[imageFileData]['Plist'])
-			# 	imageName = item[imageFileData]['Path']
-			# 	sourceSize = plistFile['frames'][imageName]['sourceSize'].replace('{','').replace('}','').split(',')
-			# 	imageHeight = float(sourceSize[1])
-			# 	AbstractNodeData.setAttribute('BottomEage', str(imageHeight - item['Scale9OriginY'] - item['Scale9Height']))
-			# else:
-			# 	img = Image.open(item[imageFileData]['Path'])
-			# 	imageHeight = float(img.size[1])
 			imageHeight = item['Size']['Y']
 			AbstractNodeData.setAttribute('BottomEage', str(int(imageHeight - item['Scale9OriginY'] - item['Scale9Height'])))
 		elif tag == 'CColor' or tag == 'ShadowColor':
@@ -136,13 +130,13 @@ def generateCSD(rootPath):
 	path = os.listdir(rootPath)
 	for item in path:
 		if os.path.isfile(rootPath + "/"+item):
-			if item.endswith('.json'):
+			if item.endswith('.json') and not item.endswith('DuiJiuPos.json'):
 				print(rootPath + "/"+item)
 				readJSONFile(rootPath + "/"+item)
 		elif os.path.isdir(rootPath + "/"+item):
 			generateCSD(rootPath + "/"+item)
 
 
-os.chdir('/Users/lidongsheng/Desktop/json')
-generateCSD('/Users/lidongsheng/Desktop/json')
-# readJSONFile('/Users/lidongsheng/Desktop/json/ChongZhi_cell_youxiChongZhi.json')
+# os.chdir('/Users/lidongsheng/Desktop/json2')
+# generateCSD('/Users/lidongsheng/Desktop/json2')
+readJSONFile('/Users/lidongsheng/Desktop/json/hhrw_donghua2.json')
