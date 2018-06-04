@@ -56,7 +56,7 @@ def generateApk(channelID,nameStr):
 	os.chdir('../../../../PythonProject/apkFactory')
 	print '-----------------------------------------------完成一个apk'
 
-#20022、20023、20024、20025、20026、20027 	
+#20022、20023、20024、20025、20026、20027
 # generateApk('20022','UMY20022')
 # generateApk('20023','UMY20023')
 # generateApk('20024','UMY20024')

@@ -136,7 +136,7 @@ def generateCSD(rootPath):
 		elif os.path.isdir(rootPath + "/"+item):
 			generateCSD(rootPath + "/"+item)
 
-
-# os.chdir('/Users/lidongsheng/Desktop/json2')
-# generateCSD('/Users/lidongsheng/Desktop/json2')
-readJSONFile('/Users/lidongsheng/Desktop/json/hhrw_donghua2.json')
+handlePath = str(sys.argv[1])
+print('handlePath',handlePath)
+os.chdir(handlePath)
+generateCSD(handlePath)

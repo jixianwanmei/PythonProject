@@ -11,6 +11,8 @@ def removeLuafile(rootPath):
 				os.remove(rootPath +"/"+item)
 		elif(os.path.isdir(rootPath +"/"+item)):
 			removeLuafile(rootPath +"/"+item)
+
+
 strPath = str(rootPath)
 strPath = strPath.rstrip()
 print strPath +'is the filePath to remove '

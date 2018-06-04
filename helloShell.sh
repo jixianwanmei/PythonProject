@@ -1,1 +1,2 @@
-echo "hello world"
+echo "shell 传递参数实例"
+echo "参数一：$0 ,参数二: $1 , 参数三: $2"

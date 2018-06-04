@@ -1,3 +1,4 @@
+
 import MySQLdb
 
 userId = raw_input("Enter your userId : ")
@@ -7,7 +8,7 @@ mIndex = int(userId)%128
 updateStr = 'update accountsinfo_'+str(mIndex)+'  set Score = ' + score + ' where userId = ' + userId 
 print updateStr
 try:
-    conn=MySQLdb.connect(host='112.124.41.108',user='root',passwd='qq',db='qpaccountsdb',port=3306)
+    conn=MySQLdb.connect(host='172.16.10.222',user='root',passwd='qq',db='qpaccountsdb',port=3306)
     cur=conn.cursor()
     cur.execute(updateStr)
     conn.commit()
